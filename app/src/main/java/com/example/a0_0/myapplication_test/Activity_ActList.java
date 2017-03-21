@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Activity_ActList extends Activity{
     String[]items={"北京市","上海市","广州市","深圳市","西安市"};
+    int a;
     ArrayList<String> arrayList=new ArrayList(30);
     ListView llistView;
     ArrayAdapter<String> arrayAdapter;
@@ -21,6 +22,7 @@ public class Activity_ActList extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__act_list);
+
         reset();
         llistView=(ListView)findViewById(R.id.lv);
         arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
@@ -32,6 +34,7 @@ public class Activity_ActList extends Activity{
         for (String s :items
                 ) {
             arrayList.add(s);}
+        a=1;
     }
 
     @Override
@@ -45,8 +48,14 @@ public class Activity_ActList extends Activity{
         switch (item.getItemId())
         {
             case R.id.add:
-                arrayList.add(items[0]);
+                if(arrayList.size()<30) {
+                    arrayList.add(a++ + "");
 //                llistView.setAdapter(arrayAdapter);
+                }
+                else
+                {
+                    Toast.makeText(this,"只能添加30项内容",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.reset:
                 reset();
@@ -59,6 +68,9 @@ public class Activity_ActList extends Activity{
                 break;
             case R.id.about:
                 Toast.makeText(this,"1513335 谢恒亮",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                //表示上面都没符合的话才显示
                 break;
         }
         llistView.setAdapter(arrayAdapter);
